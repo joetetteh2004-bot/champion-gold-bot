@@ -521,7 +521,7 @@ if uploaded_file is not None:
         st.success("CSV file uploaded successfully.")
 
 
-    if uploaded:
+    if uploaded_file is not None:
         try:
             data = load_csv(uploaded)
             source_name = "Uploaded CSV"
