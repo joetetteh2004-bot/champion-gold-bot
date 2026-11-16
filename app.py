@@ -519,7 +519,7 @@ if uploaded_file is not None:
 
     elif file_name.endswith(".csv"):
         st.success("CSV file uploaded successfully.")
-    )
+
 
     if uploaded:
         try:
