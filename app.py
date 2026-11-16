@@ -502,10 +502,24 @@ if source == "Try free Yahoo data":
             "broker as a CSV file to continue."
         )
 
-else:
-    uploaded = st.sidebar.file_uploader(
-        "Upload your XAUUSD candle CSV",
-        type=["csv"]
+else:uploaded_file = st.file_uploader(
+    "Upload TradingView or MT5 chart / CSV",
+    type=["jpg", "jpeg", "png", "csv"],
+    help="Upload a JPG, JPEG or PNG chart screenshot from TradingView or MT5, or a CSV file containing candle data."
+)
+
+if uploaded_file is not None:
+    file_name = uploaded_file.name.lower()
+
+    if file_name.endswith((".jpg", ".jpeg", ".png")):
+        st.image(
+            uploaded_file,
+            caption="Uploaded TradingView / MT5 chart",
+            use_container_width=True
+        )
+
+    elif file_name.endswith(".csv"):
+        st.success("CSV file uploaded successfully.")
     )
 
     if uploaded:
