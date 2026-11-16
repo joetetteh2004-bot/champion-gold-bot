@@ -18,7 +18,6 @@ st.set_page_config(
 
 st.title("🥇 CHAMPION GOLD BOT")
 st.caption("Gold market analysis | Smart Money Concepts")
-is
 st.info(
     "Educational analysis only. Signals are setup candidates, "
     "not financial advice or guaranteed trade calls."
