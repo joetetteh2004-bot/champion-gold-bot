@@ -469,6 +469,7 @@ def analyse_market(data):
     }
 
 
+#
 # ==========================================
 # DATA SOURCE SELECTION
 # ==========================================
@@ -477,7 +478,10 @@ st.sidebar.header("Market data")
 
 source = st.sidebar.radio(
     "Choose data source",
-    ["Try free Yahoo data", "Upload XAUUSD CSV"]
+    [
+        "Try free Yahoo data",
+        "Upload CSV or chart screenshot"
+    ]
 )
 
 data = pd.DataFrame()
@@ -494,39 +498,40 @@ if source == "Try free Yahoo data":
 
     if data.empty:
         st.error(
-            "Yahoo did not provide usable XAUUSD 15-minute candles. "
-            "This can happen with free data sources."
+            "Yahoo did not provide usable XAUUSD 15-minute candles."
         )
-        st.warning(
-            "Upload genuine XAUUSD 15-minute OHLC candles from your "
-            "broker as a CSV file to continue."
-        )
-uploaded_file = st.file_uploader(
-    "Upload TradingView or MT5 chart / CSV",
-    type=["jpg", "jpeg", "png", "csv"],
-    help="Upload a JPG, JPEG or PNG chart screenshot from TradingView or MT5, or a CSV file containing candle data."
-)
-
-if uploaded_file is not None:
-    file_name = uploaded_file.name.lower()
-
-    if file_name.endswith((".jpg", ".jpeg", ".png")):
-        st.image(
-            uploaded_file,
-            caption="Uploaded TradingView / MT5 chart",
-            use_container_width=True
+        st.info(
+            "Choose the upload option to provide your own CSV candles."
         )
 
-    elif file_name.endswith(".csv"):
-        st.success("CSV file uploaded successfully.")
-
+else:
+    uploaded_file = st.file_uploader(
+        "Upload TradingView or MT5 chart / CSV",
+        type=["jpg", "jpeg", "png", "csv"],
+        help="Upload a chart screenshot or CSV candle data."
+    )
 
     if uploaded_file is not None:
-        try:
-            data = load_csv(uploaded)
-            source_name = "Uploaded CSV"
-        except Exception as error:
-            st.error(str(error))
+        file_name = uploaded_file.name.lower()
+
+        if file_name.endswith((".jpg", ".jpeg", ".png")):
+            st.image(
+                uploaded_file,
+                caption="Uploaded TradingView / MT5 chart",
+                use_container_width=True
+            )
+            st.info(
+                "Screenshot displayed successfully. "
+                "Automatic image-based SMC analysis is not yet available."
+            )
+
+        elif file_name.endswith(".csv"):
+            try:
+                data = load_csv(uploaded_file)
+                source_name = "Uploaded CSV"
+                st.success("CSV file uploaded successfully.")
+            except Exception as error:
+                st.error(str(error))
 
 
 # ==========================================
