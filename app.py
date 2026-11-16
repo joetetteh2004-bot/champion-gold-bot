@@ -501,8 +501,7 @@ if source == "Try free Yahoo data":
             "Upload genuine XAUUSD 15-minute OHLC candles from your "
             "broker as a CSV file to continue."
         )
-
-:uploaded_file = st.file_uploader(
+uploaded_file = st.file_uploader(
     "Upload TradingView or MT5 chart / CSV",
     type=["jpg", "jpeg", "png", "csv"],
     help="Upload a JPG, JPEG or PNG chart screenshot from TradingView or MT5, or a CSV file containing candle data."
